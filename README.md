@@ -1,181 +1,260 @@
-# Human Pose Estimation using YOLOv8
+# Real-Time Human Pose Detection using YOLOv8
+
+A computer vision application for detecting and classifying human poses in real time using a custom-trained **YOLOv8 Nano** model. The system processes live webcam frames using **OpenCV** and provides real-time predictions through an interactive **Streamlit** interface.
 
 ## Overview
 
-This project implements a **Real-Time Human Pose Estimation System** using **YOLOv8 Nano**. The model is trained on a custom dataset collected from multiple online sources, annotated manually, augmented using Roboflow, and deployed as an interactive web application using Streamlit.
+This project explores real-time human pose detection using deep learning and computer vision.
 
-The trained model achieves an **mAP@0.5 of 85%**, enabling accurate real-time pose detection and keypoint estimation.
+A custom dataset containing different human postures was prepared and managed using **Roboflow** and exported in YOLOv8 format. A YOLOv8 Nano model was then trained on the dataset and evaluated using standard object-detection metrics.
 
----
+The trained model is integrated into a Streamlit application that captures frames from a webcam, performs inference, and displays the detected pose along with its confidence score.
 
-## Features
+## Key Features
 
-* Real-time Human Pose Estimation
-* Custom Dataset Collection
-* Manual Data Annotation
-* Data Augmentation using Roboflow
-* YOLOv8 Nano Fine-Tuning
-* Streamlit-based Web Deployment
-* High Accuracy (mAP@0.5 = 85%)
+* Real-time human pose detection using a webcam
+* Custom-trained YOLOv8 Nano model
+* Custom annotated dataset prepared using Roboflow
+* Bounding-box-based pose detection and classification
+* Confidence score for each detected pose
+* Streamlit-based interactive interface
+* OpenCV-based real-time video processing
+* Separate training and deployment components
 
----
+## Pose Classes
+
+The model is trained to recognize the following pose categories:
+
+| # | Pose                  |
+| - | --------------------- |
+| 1 | Good Posture Standing |
+| 2 | Plank Pose            |
+| 3 | Warrior Pose          |
+| 4 | Sitting Front View    |
+| 5 | Sitting Side View     |
+| 6 | Tree Pose             |
+
+## Project Workflow
+
+```text
+Custom Image Dataset
+        │
+        ▼
+Dataset Annotation & Preparation
+        │
+        ▼
+Roboflow
+        │
+        ▼
+YOLOv8 Dataset Format
+        │
+        ▼
+YOLOv8 Nano Training
+        │
+        ▼
+Model Evaluation
+        │
+        ▼
+best.pt
+        │
+        ▼
+Streamlit Application
+        │
+        ▼
+Webcam Input
+        │
+        ▼
+Real-Time Pose Detection
+```
 
 ## Project Structure
 
 ```text
-Human-Pose-Estimation/
+Human_Pose_Estimation/
 │
-├── Model_Training/
-│   ├── model_training.ipynb
+├── app/
+│   └── app.py
+│
+├── models/
 │   └── best.pt
 │
-├── Deployment/
-│   ├── app.py
-│   └── best.pt
+├── notebooks/
+│   └── model_training.ipynb
 │
-└── README.md
+├── .gitignore
+├── README.md
+└── requirements.txt
 ```
 
-### Folder Description
+### Directory Description
 
-#### Model_Training/
-
-Contains all files related to model training.
-
-* **model_training.ipynb** – Jupyter Notebook used for data preprocessing, training, validation, and evaluation.
-* **best.pt** – Best-performing YOLOv8 model weights obtained after training.
-
-#### Deployment/
-
-Contains files required for application deployment.
-
-* **app.py** – Streamlit application for real-time pose estimation.
-* **best.pt** – Trained YOLOv8 model used for inference.
-
----
-
-## Dataset Preparation
-
-### Data Collection
-
-The dataset was collected from various publicly available online sources containing images of humans in different poses and environments.
-
-### Annotation
-
-Images were manually annotated to ensure high-quality pose labels and keypoint information.
-
-### Data Augmentation
-
-Data augmentation was performed using **Roboflow** to improve model robustness and generalization. Augmentation techniques included:
-
-* Rotation
-* Flipping
-* Scaling
-* Brightness Adjustment
-* Cropping
-* Other Roboflow-supported transformations
-
----
+* **`app/`** — Contains the Streamlit application used for real-time webcam inference.
+* **`models/`** — Contains the trained YOLOv8 model weights.
+* **`notebooks/`** — Contains the model training and evaluation workflow.
+* **`requirements.txt`** — Lists the Python dependencies required for the project.
 
 ## Model Training
 
-The project uses **YOLOv8 Nano (YOLOv8n-Pose)** as the base model.
+The model training workflow is available in:
 
-### Training Workflow
+```text
+notebooks/model_training.ipynb
+```
 
-1. Data Collection
-2. Manual Annotation
-3. Data Augmentation using Roboflow
-4. Dataset Export
-5. YOLOv8 Fine-Tuning
-6. Model Evaluation
-7. Deployment
+The dataset was prepared using **Roboflow** and exported in YOLOv8 format.
 
-### Performance
+The YOLOv8 Nano architecture was trained using the following configuration:
 
-| Metric  | Score |
-| ------- | ----- |
-| mAP@0.5 | 85%   |
+| Parameter          | Value              |
+| ------------------ | ------------------ |
+| Model              | YOLOv8 Nano        |
+| Epochs             | 80                 |
+| Image Size         | 400                |
+| Framework          | Ultralytics YOLOv8 |
+| Dataset Format     | YOLOv8             |
+| Dataset Management | Roboflow           |
 
----
+The best model weights generated during training are stored as:
+
+```text
+models/best.pt
+```
+
+## Technologies Used
+
+| Technology           | Purpose                               |
+| -------------------- | ------------------------------------- |
+| Python               | Core programming language             |
+| YOLOv8 / Ultralytics | Model training and inference          |
+| OpenCV               | Webcam capture and image processing   |
+| Streamlit            | Interactive application interface     |
+| Roboflow             | Dataset preparation and management    |
+| NumPy                | Numerical and image-array operations  |
+| Matplotlib           | Training and evaluation visualization |
+| Jupyter Notebook     | Model experimentation and training    |
 
 ## Installation
 
-### Clone Repository
+### 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-username/Human-Pose-Estimation.git
-
-cd Human-Pose-Estimation
+git clone https://github.com/Akshat29065/Human_Pose_Estimation.git
 ```
 
-### Install Dependencies
+Move into the project directory:
 
 ```bash
-pip install ultralytics
-pip install streamlit
-pip install opencv-python
-pip install numpy
+cd Human_Pose_Estimation
 ```
 
-Or
+### 2. Create a virtual environment
+
+Windows:
+
+```bash
+python -m venv venv
+venv\Scripts\activate
+```
+
+macOS/Linux:
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
+
+### 3. Install dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
----
-
 ## Running the Application
 
-Navigate to the Deployment folder:
+Make sure the trained model is available at:
 
-```bash
-cd Deployment
+```text
+models/best.pt
 ```
 
-Run the Streamlit application:
+Then run the Streamlit application from the project root:
 
 ```bash
-streamlit run app.py
+streamlit run app/app.py
 ```
 
-The application will open in your browser and allow image/video-based pose estimation using the trained YOLOv8 model.
+Streamlit will start the application locally, typically at:
 
----
+```text
+http://localhost:8501
+```
 
-## Technologies Used
+Allow access to the webcam if required by your system.
 
-* Python
-* YOLOv8 (Ultralytics)
-* OpenCV
-* Roboflow
-* Streamlit
-* NumPy
-* Jupyter Notebook
+The application will process webcam frames using the trained YOLOv8 model and display the detected pose and confidence score in real time.
 
----
+## Requirements
+
+The project uses the following primary dependencies:
+
+```text
+ultralytics
+streamlit
+opencv-python
+numpy
+pillow
+matplotlib
+python-dotenv
+roboflow
+```
+
+The complete dependency configuration is available in `requirements.txt`.
+
+## Dataset
+
+The dataset consists of images representing multiple human poses and postures.
+
+Dataset preparation and management were performed using **Roboflow**, with annotations exported in YOLOv8-compatible format for model training.
+
+The dataset itself is not included in this repository.
+
+## Model Inference
+
+During real-time inference:
+
+1. OpenCV captures frames from the connected webcam.
+2. Each frame is passed to the trained YOLOv8 model.
+3. YOLOv8 detects and classifies the human pose.
+4. The predicted bounding box is rendered on the frame.
+5. The corresponding pose class and confidence score are displayed.
+6. The processed frame is displayed through the Streamlit interface.
+
+## Limitations
+
+* Detection performance depends on lighting, camera quality, background conditions, and pose visibility.
+* The model is limited to the pose classes represented in the training dataset.
+* Performance may decrease for poses or viewing angles that differ significantly from the training data.
+* Webcam performance can vary depending on the operating system and connected camera device.
 
 ## Future Improvements
 
-* Multi-person pose tracking
-* Video stream optimization
-* Mobile deployment
-* Edge-device inference
-* Higher-capacity YOLO models for improved accuracy
+Potential improvements include:
 
----
-
-## Results
-
-The trained YOLOv8 Nano model successfully performs real-time human pose estimation with an **85% mAP@0.5**, demonstrating strong performance on custom-collected and augmented datasets.
-
----
+* Expanding the dataset with more pose categories and viewing angles
+* Increasing variation in lighting, backgrounds, and subjects
+* Evaluating larger YOLO architectures
+* Improving real-time inference performance
+* Adding browser-based webcam support for cloud deployment
+* Extending the system toward keypoint-based human pose estimation
 
 ## Author
 
 **Akshat Agarwal**
 
-B.Tech Computer Science Engineering (Data Science)
+B.Tech Computer Science & Engineering
+Specialization in Data Science
+UPES, Dehradun
 
-Specialization in Machine Learning, Computer Vision, and AI Applications.
+GitHub: `Akshat29065`
+
+

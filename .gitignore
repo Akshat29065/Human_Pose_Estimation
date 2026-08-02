@@ -1,0 +1,38 @@
+# Environment variables / secrets
+.env
+.env.*
+
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyd
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# IDE
+.vscode/
+.idea/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Environment variables / secrets
+.env
+.streamlit/secrets.toml
+
+# YOLO training outputs
+runs/
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
